@@ -40,11 +40,18 @@ table.list_main_table {
 .list_main_lines td,
 .list_main_footers td,
 .list_main_footers th {
-    border-style: none;
     text-align:left;
     font-size:12;
-    padding:0;
 }
+
+.list_main_lines td {
+    border-bottom:thin solid #EEEEEE
+}
+
+.list_main_footers td {
+    border: thin solid  #ffffff;
+}
+
 .list_main_footers th {
     text-align:right;
 }
@@ -54,6 +61,10 @@ td .total_empty_cell {
 }
 td .total_sum_cell {
     width: 13%;
+}
+
+tfoot.totals tr:first-child td{
+    padding-top: 15px;
 }
 
 .nobreak {
@@ -195,8 +206,8 @@ td.main_col1 {
     vertical-align:top;
 }
 .main_col4 {
-	width: 10%;
-	text-align:right;
+    width: 10%;
+    text-align:right;
     vertical-align:top;
 }
 .main_col5 {
@@ -208,7 +219,6 @@ td.main_col1 {
     width: 13%;
     vertical-align:top;
 }
-
 
     </style>
 
@@ -252,7 +262,7 @@ td.main_col1 {
         <% setLang(purch.partner_id.lang) %>
         <div class="address">
             <table class="recipient">
-		        ${address(partner=purch.partner_id)}
+                ${address(partner=purch.partner_id)}
             </table>
             %if purch.company_id.partner_id:
                 <table class="invoice">
@@ -264,13 +274,13 @@ td.main_col1 {
             %if purch.dest_address_id:
                 <table class="shipping">
                 <tr><td class="address_title">${_("Shipping address:")}</td></tr>
-		        ${address(partner=purch.dest_address_id)}
+                ${address(partner=purch.dest_address_id)}
                 </table>
             %endif
         </div>
 
         <h3 style="clear: both; padding-top: 20px;">
-        	${quotation and _(u'Quotation N°') or _(u'Purchase Order N°') } ${purch.name}
+            ${quotation and _(u'Quotation N°') or _(u'Purchase Order N°') } ${purch.name}
         </h3>
         <table class="basic_table" width="100%">
             <tr>
@@ -288,83 +298,61 @@ td.main_col1 {
         </table>
         <table class="list_main_table" width="100%" >
             <thead>
-                <tr>
-	          <th class="list_main_headers" style="width: 100%">
-	            <table style="width:100%">
-	              <tr>
-                    <th class="main_col1">${_("Description")}</th>
-                    <th class="main_col2">${_("Taxes")}</th>
-                    <th class="main_col3">${_("Date Req.")}</th>
-                    <th style="text-align:center" class="amount main_col4">${_("Qty")}</th>
-                    <th class="main_col5">${_("UoM")}</th>
-                    <th class="amount main_col6">${_("Unit Price")}</th>
-                    <th class="amount main_col7">${_("Net Price")}</th>
-                  </tr>
-                </table>
-              </th>
-                </tr>
+              <tr class="list_main_headers">
+                <th class="main_col1">${_("Description")}</th>
+                <th class="main_col2">${_("Taxes")}</th>
+                <th class="main_col3">${_("Date Req.")}</th>
+                <th style="text-align:center" class="amount main_col4">${_("Qty")}</th>
+                <th class="main_col5">${_("UoM")}</th>
+                <th class="amount main_col6">${_("Unit Price")}</th>
+                <th class="amount main_col7">${_("Net Price")}</th>
+              </tr>
             </thead>
             <tbody>
             %for line in purch.order_line :
-          <tr>
-            <td class="list_main_lines" style="width: 100%">
-              <div class="nobreak">
-                <table style="width:100%">
-                  <tr>
-                    <td class="main_col1">${line.name.replace('\n','<br/>') or '' | n}</td>
-                    <td style="text-align:center" class="main_col2">${ ', '.join([ tax.name or '' for tax in line.taxes_id ])}</td>
-                    <td style="text-align:center" class="main_col3">${formatLang(line.date_planned, date=True)}</td>
-                    <td class="amount main_col4">${line.product_qty}</td>
-                    <td class="main_col5">${line.product_uom.name}</td>
-                    <td class="amount main_col6">${formatLang(line.price_unit, digits=get_digits(dp='Purchase Price'))}</td>
-                    <td class="amount main_col7">${formatLang(line.price_subtotal, digits=get_digits(dp='Purchase Price'))} ${purch.pricelist_id.currency_id.symbol}</td>
-                  </tr>
-                 </table>
-              </div>
-            </td>
-          </tr>
+              <tr class="list_main_lines">
+                <td class="main_col1">${line.name.replace('\n','<br/>') or '' | n}</td>
+                <td style="text-align:center" class="main_col2">${ ', '.join([ tax.name or '' for tax in line.taxes_id ])}</td>
+                <td style="text-align:center" class="main_col3">${formatLang(line.date_planned, date=True)}</td>
+                <td class="amount main_col4">${line.product_qty}</td>
+                <td class="main_col5">${line.product_uom.name}</td>
+                <td class="amount main_col6">${formatLang(line.price_unit, digits=get_digits(dp='Purchase Price'))}</td>
+                <td class="amount main_col7">${formatLang(line.price_subtotal, digits=get_digits(dp='Purchase Price'))} ${purch.pricelist_id.currency_id.symbol}</td>
+              </tr>
            %endfor
             </tbody>
-	      <tfoot class="totals">
-	        <tr>
-	          <td class="list_main_footers" style="width: 100%">
-	            <div class="nobreak">
-	              <table style="width:100%">
-	                <tr>
-	                  <td class="total_empty_cell"/>
-                  <th>
-                    ${_("Net :")}
-                  </th>
-                  <td class="amount total_sum_cell">
-                    ${formatLang(purch.amount_untaxed, digits=get_digits(dp='Purchase Price'))} ${purch.pricelist_id.currency_id.symbol}
-                  </td>
-                </tr>
-                <tr>
-                  <td class="total_empty_cell"/>
-                  <th>
-                    ${_("Taxes:")}
-                  </th>
-                  <td class="amount total_sum_cell">
-                    ${formatLang(purch.amount_tax, digits=get_digits(dp='Purchase Price'))} ${purch.pricelist_id.currency_id.symbol}
-                  </td>
-                </tr>
-                <tr>
-                  <td class="total_empty_cell"/>
-                  <th>
-                    ${_("Total:")}
-                  </th>
-                  <td class="amount total_sum_cell">
-                    ${formatLang(purch.amount_total, digits=get_digits(dp='Purchase Price'))} ${purch.pricelist_id.currency_id.symbol}
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </td>
-        </tr>
+          <tfoot class="totals">
+            <tr class="list_main_footers">
+                <td colspan="5" class="total_empty_cell"/>
+              <td style="font-weight:bold; text-align: right">
+                ${_("Net :")}
+              </td>
+              <td class="amount total_sum_cell">
+                ${formatLang(purch.amount_untaxed, digits=get_digits(dp='Purchase Price'))} ${purch.pricelist_id.currency_id.symbol}
+              </td>
+            </tr>
+            <tr class="list_main_footers">
+              <td colspan="5" class="total_empty_cell"/>
+              <td style="font-weight:bold; text-align: right">
+                ${_("Taxes:")}
+              </td>
+              <td class="amount total_sum_cell">
+                ${formatLang(purch.amount_tax, digits=get_digits(dp='Purchase Price'))} ${purch.pricelist_id.currency_id.symbol}
+              </td>
+            </tr>
+            <tr class="list_main_footers">
+              <td colspan="5" class="total_empty_cell"/>
+              <td style="font-weight:bold; text-align: right">
+                ${_("Total:")}
+              </td>
+              <td class="amount total_sum_cell">
+                ${formatLang(purch.amount_total, digits=get_digits(dp='Purchase Price'))} ${purch.pricelist_id.currency_id.symbol}
+              </td>
+            </tr>
       </tfoot>
     </table>
         <p style="page-break-after:always"/>
         <br/>
-	%endfor
+    %endfor
 </body>
 </html>
