@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="sale.report_sale_order" model="ir.actions.report.xml">
+            <field name="report_file">sale_order_report_custom/sale_order.mako</field>
+        </record>
+
+    </data>
+</openerp>
