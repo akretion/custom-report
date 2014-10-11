@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="stock.report_picking_list_out" model="ir.actions.report.xml">
+            <field name="report_file">stock_picking_out_report_custom/delivery_slip.mako</field>
+        </record>
+
+    </data>
+</openerp>
