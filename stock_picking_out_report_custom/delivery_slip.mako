@@ -32,6 +32,14 @@
         .list_main_table thead {
             display:table-header-group;
         }
+        .table_barcode {
+            float: right;
+        }
+        .barcode {
+            font-size: 55px;
+            font-family: "c39hrp24dhtt";
+            margin-right: 40px;
+        }
 
     </style>
 </head>
@@ -60,6 +68,17 @@
                     %endif
                 %endfor
             </table>
+
+            <table class="table_barcode">
+                <tr>
+                    <td>
+                        <p class="barcode">
+                          *${picking.name}*
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
             <%
             invoice_addr = invoice_address(picking)
             %>
