@@ -51,20 +51,16 @@
         
         <table class="basic_table" width="100%">
             <tr>
-                <td style="font-weight:bold;">${_("Contact")}</td>
                 <td style="font-weight:bold;">${_("Origin")}</td>
                 <td style="font-weight:bold;">${_("Scheduled Date")}</td>
                 <td style="font-weight:bold;">${_('Weight')}</td>
                 <td style="font-weight:bold;">${_('Delivery Method')}</td>
-                <td style="font-weight:bold;">${_('Incoterm')}</td>
             </tr>
             <tr>
-                <td>${user.name}</td>
                 <td>${picking.origin or ''}</td>
                 <td>${formatLang(picking.min_date, date=True)}</td>
                 <td>${picking.weight}</td>
                 <td>${picking.carrier_id and picking.carrier_id.name or ''}</td>
-                <td>${picking.sale_id and picking.sale_id.incoterm and picking.sale_id.incoterm.name or ''}</td>
             </tr>
         </table>
     
@@ -72,7 +68,6 @@
             <thead>
                 <tr>
                     <th style="text-align:left; ">${_("Description")}</th>
-                    <th style="text-align:left; ">${_("Serial Number")}</th>
                     <th class="amount">${_("Quantity")}</th>
                 </tr>
             </thead>
@@ -80,7 +75,6 @@
             %for line in picking.move_lines:
                 <tr class="line">
                     <td style="text-align:left; " >${ line.name }</td>
-                    <td style="text-align:left; " >${ line.prodlot_id and line.prodlot_id.name or ''}</td>
                     <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
                 </tr>
             %endfor
