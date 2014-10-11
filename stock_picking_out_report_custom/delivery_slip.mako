@@ -1,8 +1,38 @@
 ## -*- coding: utf-8 -*-
 <html>
+
+<!-- We should share the css between all report copy paste ccs from invoice-->
 <head>
     <style type="text/css">
         ${css}
+
+        .list_main_table {
+            border:thin solid #E3E4EA;
+            text-align:center;
+            border-collapse: collapse;
+        }
+        .list_main_table th {
+            background-color: #EEEEEE;
+            border: thin solid #000000;
+            text-align:center;
+            font-size:12;
+            font-weight:bold;
+            padding-right:3px;
+            padding-left:3px;
+        }
+        .list_main_table td {
+            border-top : thin solid #EEEEEE;
+            text-align:left;
+            font-size:12;
+            padding-right:3px;
+            padding-left:3px;
+            padding-top:3px;
+            padding-bottom:3px;
+        }
+        .list_main_table thead {
+            display:table-header-group;
+        }
+
     </style>
 </head>
 
@@ -51,10 +81,10 @@
         
         <table class="basic_table" width="100%">
             <tr>
-                <td style="font-weight:bold;">${_("Origin")}</td>
-                <td style="font-weight:bold;">${_("Scheduled Date")}</td>
-                <td style="font-weight:bold;">${_('Weight')}</td>
-                <td style="font-weight:bold;">${_('Delivery Method')}</td>
+                <th style="font-weight:bold;">${_("Origin")}</th>
+                <th style="font-weight:bold;">${_("Scheduled Date")}</th>
+                <th style="font-weight:bold;">${_('Weight')}</th>
+                <th style="font-weight:bold;">${_('Delivery Method')}</th>
             </tr>
             <tr>
                 <td>${picking.origin or ''}</td>
@@ -64,17 +94,17 @@
             </tr>
         </table>
     
-        <table class="list_sale_table" width="100%" style="margin-top: 20px;">
+        <table class="list_main_table" width="100%" style="margin-top: 20px;">
             <thead>
                 <tr>
-                    <th style="text-align:left; ">${_("Description")}</th>
+                    <th>${_("Description")}</th>
                     <th class="amount">${_("Quantity")}</th>
                 </tr>
             </thead>
             <tbody>
             %for line in picking.move_lines:
-                <tr class="line">
-                    <td style="text-align:left; " >${ line.name }</td>
+                <tr>
+                    <td>${ line.name }</td>
                     <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
                 </tr>
             %endfor
