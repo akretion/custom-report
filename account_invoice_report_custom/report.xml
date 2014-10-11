@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="account.account_invoices" model="ir.actions.report.xml">
+            <field name="report_file">account_invoice_report_custom/account_invoice.mako</field>
+        </record>
+
+    </data>
+</openerp>
