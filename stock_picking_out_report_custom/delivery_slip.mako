@@ -52,9 +52,11 @@
     %>
     %for picking in objects:
         <% setLang(picking.partner_id.lang) %>
+        <% picking.set_printed() %>
         <div class="address">
             <table class="recipient">
                 %if picking.partner_id.parent_id:
+                <tr><td class="address_title">${_("Delivery address:")}</td></tr>
                 <tr><td class="name">${picking.partner_id.parent_id.name or ''}</td></tr>
                 <tr><td>${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
                 <% address_lines = picking.partner_id.contact_address.split("\n")[1:] %>
@@ -67,6 +69,8 @@
                     <tr><td>${part}</td></tr>
                     %endif
                 %endfor
+                <tr><td>${picking.partner_id.phone or picking.partner_id.mobile or ''}</td></tr>
+                <tr><td>${picking.partner_id.email or ''}</td></tr>
             </table>
 
             <table class="table_barcode">
@@ -95,19 +99,22 @@
                 %endif
             </table>
         </div>
-        
-        <h1 style="clear:both;">${_(u'Delivery Order') } ${picking.name}</h1>
+        %if picking.sale_id:
+            <h1 style="clear:both;">${_(u'Sale Order:') } ${picking.sale_id.name}</h1>
+        %endif
+        %if picking.claim_id:
+            <h1 style="clear:both;">${_(u'RMA') } ${picking.sale_id.name}</h1>
+        %endif
+        <h1 style="clear:both;">${_(u'Delivery Order:') } ${picking.name}</h1>
         
         <table class="basic_table" width="100%">
             <tr>
-                <th style="font-weight:bold;">${_("Origin")}</th>
                 <th style="font-weight:bold;">${_("Scheduled Date")}</th>
                 <th style="font-weight:bold;">${_('Weight')}</th>
                 <th style="font-weight:bold;">${_('Delivery Method')}</th>
             </tr>
             <tr>
-                <td>${picking.origin or ''}</td>
-                <td>${formatLang(picking.min_date, date=True)}</td>
+                <td>${formatLang(picking.max_date, date=True)}</td>
                 <td>${picking.weight}</td>
                 <td>${picking.carrier_id and picking.carrier_id.name or ''}</td>
             </tr>
@@ -116,15 +123,25 @@
         <table class="list_main_table" width="100%" style="margin-top: 20px;">
             <thead>
                 <tr>
+                    <th>${_("Building")}</th>
+                    <th>${_("Brand")}</th>
+                    <th>${_("Collection")}</th>
+                    <th>${_("Model")}</th>
                     <th>${_("Description")}</th>
                     <th class="amount">${_("Quantity")}</th>
+                    <th>${_("Availability")}</th>
                 </tr>
             </thead>
             <tbody>
             %for line in picking.move_lines:
                 <tr>
+                    <td>${ line.building }</td>
+                    <td>${ line.product_brand_id.name }</td>
+                    <td>${ line.product_collection_id.name }</td>
+                    <td>${ line.product_code }</td>
                     <td>${ line.name }</td>
                     <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
+                    <td>${ line.state }</td>
                 </tr>
             %endfor
         </table>

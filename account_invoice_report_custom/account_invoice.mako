@@ -187,23 +187,8 @@ td.vat {
         <%doc>
             XXX add a helper for address in report_webkit module as this won't be suported in v8.0
         </%doc>
-        <% company_partner = False %>
-        %if commercial_partner:
-            %if commercial_partner.id != partner.id:
-                <% company_partner = commercial_partner %>
-            %endif
-        %elif partner.parent_id:
-            <% company_partner = partner.parent_id %>
-        %endif
-
-        %if company_partner:
-            <tr><td class="name">${company_partner.name or ''}</td></tr>
-            <tr><td>${partner.title and partner.title.name or ''} ${partner.name}</td></tr>
-            <% address_lines = partner.contact_address.split("\n")[1:] %>
-        %else:
             <tr><td class="name">${partner.title and partner.title.name or ''} ${partner.name}</td></tr>
             <% address_lines = partner.contact_address.split("\n") %>
-        %endif
         %for part in address_lines:
             % if part:
                 <tr><td>${part}</td></tr>
@@ -231,6 +216,7 @@ td.vat {
             ${_("Cancelled Invoice")} ${inv.number or ''}
         %elif inv.type == 'out_invoice':
             ${_("Invoice")} ${inv.number or ''}
+            ${_("Sale Order")} ${inv.origin or ''}
         %elif inv.type == 'in_invoice':
             ${_("Supplier Invoice")} ${inv.number or ''}
         %elif inv.type == 'out_refund':
@@ -239,14 +225,10 @@ td.vat {
             ${_("Supplier Refund")} ${inv.number or ''}
         %endif
     </h1>
-    <h3  style="clear: both; padding-top: 20px;">
-        ${_("Subject : ")} ${inv.name or ''}
-    </h3>
 
     <table class="basic_table" width="100%">
         <tr>
             <th class="date">${_("Invoice Date")}</td>
-            <th class="date">${_("Due Date")}</td>
             <th style="text-align:center">${_("Payment Term")}</td>
             <th style="text-align:center">${_("Our reference")}</td>
             %if inv.reference and inv.reference != inv.name and inv.origin != inv.reference:
@@ -255,8 +237,7 @@ td.vat {
         </tr>
         <tr>
             <td class="date">${formatLang(inv.date_invoice, date=True)}</td>
-            <td class="date">${formatLang(inv.date_due, date=True)}</td>
-            <td style="text-align:center">${inv.payment_term and inv.payment_term.note or ''}</td>
+            <td style="text-align:center">${inv.sale_ids and inv.sale_ids[0].payment_method_id.name or ''}</td>
             <td style="text-align:center">${inv.origin or ''}</td>
             %if inv.reference and inv.reference != inv.name and inv.origin != inv.reference:
                 <td style="text-align:center">${inv.reference}</td>
@@ -273,6 +254,9 @@ td.vat {
     <table class="list_main_table" width="100%" style="margin-top: 20px;">
         <thead>
             <tr>
+                <th>${_("Brand")}</th>
+                <th>${_("Collection")}</th>
+                <th>${_("Model")}</th>
                 <th>${_("Description")}</th>
                 <th>${_("Qty")}</th>
                 <th>${_("UoM")}</th>
@@ -285,6 +269,9 @@ td.vat {
         <tbody>
         %for line in inv.invoice_line :
             <tr>
+                <td class="align_top">${line.product_id.categ_brand_id.name or ''}</td>
+                <td class="align_top">${line.product_id.collection_id.name or ''}</td>
+                <td class="align_top">${line.product_id.base_default_code or ''}</td>
                 <td class="align_top"><div class="nobreak">${line.name.replace('\n','<br/>') or '' | n}
                     %if line.formatted_note:
                         <br />
@@ -302,7 +289,7 @@ td.vat {
         </tbody>
         <tfoot class="totals">
             <tr>
-                <td colspan="6" style="text-align:right;border-right: thin solid  #ffffff ;border-left: thin solid  #ffffff ;">
+                <td colspan="9" style="text-align:right;border-right: thin solid  #ffffff ;border-left: thin solid  #ffffff ;">
                     <b>${_("Net :")}</b>
                 </td>
                 <td class="amount" style="border-right: thin solid  #ffffff ;border-left: thin solid  #ffffff ;">
@@ -310,7 +297,7 @@ td.vat {
                 </td>
             </tr>
             <tr class="no_bloc">
-                <td colspan="6" style="text-align:right; border-top: thin solid  #ffffff ; border-right: thin solid  #ffffff ;border-left: thin solid  #ffffff ;">
+                <td colspan="9" style="text-align:right; border-top: thin solid  #ffffff ; border-right: thin solid  #ffffff ;border-left: thin solid  #ffffff ;">
                     <b>${_("Taxes:")}</b>
                 </td>
                 <td class="amount" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;">
@@ -318,7 +305,7 @@ td.vat {
                 </td>
             </tr>
             <tr>
-                <td colspan="6" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;border-bottom: thin solid  #ffffff ;text-align:right;">
+                <td colspan="9" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;border-bottom: thin solid  #ffffff ;text-align:right;">
                     <b>${_("Total:")}</b>
                 </td>
                 <td class="amount" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;border-bottom: thin solid  #ffffff ;">
@@ -346,39 +333,6 @@ td.vat {
     </table>
         <br/>
         <br/>
-        <h4>
-                ${_("Thank you for your prompt payment")}
-        </h4>
-        <br/>
-    <%
-      inv_bank = inv.partner_bank_id
-    %>
-    <div class="list_bank_table act_as_table" style="width:100%;" >
-      <!-- vat value are taken back from commercial id -->
-        <div class="act_as_row">
-            <div class="act_as_thead" style="width:20%;">${_("Bank")}</div>
-            <div class="act_as_cell" style="width:40%;text-align:left;">${inv_bank and inv_bank.bank_name or '-' } </div>
-            %if inv.partner_id and inv.partner_id.vat :
-            <div class="act_as_thead" style="width:20%;">${_("Customer VAT No")}</div>
-            <div class="act_as_cell" style="width:20%;">${inv.partner_id.vat or '-'}</div>
-            %else:
-            <!-- conserve table's cells widths -->
-            <div class="act_as_cell" style="width:20%;"></div>
-            <div class="act_as_cell" style="width:20%;"></div>
-            %endif
-        </div>
-        <div class="act_as_row">
-            <div class="act_as_thead" style="width:20%;">${_("Bank account")}</div>
-            <div class="act_as_cell" style="width:40%;text-align:left;">${ inv_bank and inv_bank.acc_number or '-' }</div>
-            <div class="act_as_thead" style="width:20%;">${_("Our VAT No")}</div>
-            <div class="act_as_cell" style="width:20%;" class="vat">${inv.company_id.partner_id.vat or '-'}</div>
-        </div>
-        <div class="act_as_row">
-            <div class="act_as_thead" style="width:20%;">${_("BIC")}</div>
-            <div class="act_as_cell"  style="width:40%;">${inv_bank and inv_bank.bank_bic or '-' }</div>
-        </div>
-    </div>
-    <br/>
     %if inv.comment:
         <p class="std_text">${inv.comment | carriage_returns}</p>
     %endif
@@ -392,9 +346,7 @@ td.vat {
         </p>
     %endif
 
-    %if not loop.last:
     <p style="page-break-after:always"></p>
-    %endif
 
     %endfor
 </body>
