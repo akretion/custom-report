@@ -283,7 +283,7 @@ td.vat {
                 <td class="amount align_top">${formatLang(line.price_unit)}</td>
                 <td class="align_top" style="font-style:italic; font-size: 10;text-align:center;" >${ ', '.join([ tax.description or tax.name for tax in line.invoice_line_tax_id ])}</td>
                 <td class="amount align_top" width="10%">${line.discount and formatLang(line.discount, digits=get_digits(dp='Account')) or ''} ${line.discount and '%' or ''}</td>
-                <td class="amount align_top" width="13%">${formatLang(line.price_subtotal, digits=get_digits(dp='Account'))} ${inv.currency_id.symbol}</td>
+                <td class="amount align_top" width="13%">${formatLang(line.price_subtotal_taxinc, digits=get_digits(dp='Account'))} ${inv.currency_id.symbol}</td>
             </tr>
         %endfor
         </tbody>
