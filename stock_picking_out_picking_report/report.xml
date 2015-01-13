@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <report id="webkit_picking"
+            name="webkit.picking"
+            auto="False"
+            model="stock.picking.out"
+            file="stock_picking_out_picking_report/picking.mako"
+            string="Picking Report"
+            report_type="webkit"
+            header="False"/>
+ 
+    </data>
+
+    <data noupdate="1">
+        <record id="webkit_picking" model="ir.actions.report.xml">
+           <field name="webkit_header" ref="base_headers_webkit.base_reports_portrait_header"></field>
+        </record>
+    </data>
+
+</openerp>
