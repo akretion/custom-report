@@ -6,7 +6,7 @@
             name="webkit.picking"
             auto="False"
             model="stock.picking.out"
-            file="stock_picking_out_picking_report/picking.mako"
+            file="stock_picking_out_picking_custom/picking.mako"
             string="Picking Report"
             report_type="webkit"
             header="False"/>
