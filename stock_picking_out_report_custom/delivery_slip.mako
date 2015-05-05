@@ -73,16 +73,6 @@
                 <tr><td>${picking.partner_id.email or ''}</td></tr>
             </table>
 
-            <table class="table_barcode">
-                <tr>
-                    <td>
-                        <p class="barcode">
-                          *${picking.name}*
-                        </p>
-                    </td>
-                </tr>
-            </table>
-
             <%
             invoice_addr = invoice_address(picking)
             %>
