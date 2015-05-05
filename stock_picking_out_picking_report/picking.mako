@@ -109,7 +109,7 @@
         
         <table class="basic_table" width="100%">
             <tr>
-                <th style="font-weight:bold;">${_("Scheduled Date")}</th>
+                <th style="font-weight:bold;">${_("Scheduled Shipping Date")}</th>
                 <th style="font-weight:bold;">${_('Weight')}</th>
                 <th style="font-weight:bold;">${_('Delivery Method')}</th>
             </tr>
@@ -140,8 +140,8 @@
                     <td>${ line.product_collection_id.name }</td>
                     <td>${ line.product_code }</td>
                     <td>${ line.name }</td>
-                    <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
-                    <td>${ line.state }</td>
+                    <td class="amount" >${ int(line.product_qty) } </td>
+                    <td>${ line.state == 'available' and 'Stock' or 'Reassort' }</td>
                 </tr>
             %endfor
         </table>

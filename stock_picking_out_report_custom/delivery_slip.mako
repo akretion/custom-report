@@ -129,7 +129,6 @@
                     <th>${_("Model")}</th>
                     <th>${_("Description")}</th>
                     <th class="amount">${_("Quantity")}</th>
-                    <th>${_("Availability")}</th>
                 </tr>
             </thead>
             <tbody>
@@ -140,8 +139,7 @@
                     <td>${ line.product_collection_id.name }</td>
                     <td>${ line.product_code }</td>
                     <td>${ line.name }</td>
-                    <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
-                    <td>${ line.state }</td>
+                    <td class="amount" >${ int(line.product_qty) }</td>
                 </tr>
             %endfor
         </table>

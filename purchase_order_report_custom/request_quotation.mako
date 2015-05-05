@@ -275,17 +275,21 @@ td.main_col1 {
         <table class="list_main_table" width="100%" >
             <thead>
               <tr class="list_main_headers">
-                <th class="main_col1">${_("Description")}</th>
-                <th class="main_col3">${_("Expected Date")}</th>
-                <th style="text-align:center" class="amount main_col4">${_("Qty")}</th>
+                <th class="main_col1">${_("Product")}</th>
+                <th class="main_col2">${_("Model")}</th>
+                <th class="main_col3">${_("Size")}</th>
+                <th class="main_col4">${_("Color")}</th>
+                <th style="text-align:center" class="amount main_col5">${_("Qty")}</th>
               </tr>
             </thead>
             <tbody>
               %for line in purch.order_line :
               <tr class="line list_main_lines">
-                <td class="main_col1"><div class="nobreak">${line.name.replace('\n','<br/>') or '' | n}</div></td>
-                <td style="text-align:center" class="main_col3">${formatLang(line.date_planned, date=True)}</td>
-                <td class="amount main_col4">${line.product_qty} ${line.product_uom and line.product_uom.name or ''}</td>
+                <td class="main_col1">${line.product_id.name}</td>
+                <td class="main_col2">${line.product_id.base_default_code}</td>
+                <td class="main_col3">${line.product_id.size_id.name}</td>
+                <td class="main_col4">${line.product_id.color_id.name}</td>
+                <td class="amount main_col5">${line.product_qty}</td>
               </tr>
               %endfor
             </tbody>
