@@ -14,9 +14,23 @@
     </data>
 
     <data noupdate="1">
-        <record id="webkit_picking" model="ir.actions.report.xml">
-           <field name="webkit_header" ref="base_headers_webkit.base_reports_portrait_header"></field>
+
+        <record id="base_ultra_minimum_reports_portrait_header" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[<html><body></body></html>]]></field>
+            <field name="orientation">Portrait</field>
+            <field name="format">A4</field>
+            <field name="html"><![CDATA[<html><body></body></html>]]></field>
+            <field eval="5.0" name="margin_top"/>
+            <field eval="0.0" name="margin_bottom"/>
+            <field name="css"><![CDATA[]]></field>
+            <field name="name">Base Ultra Minimum Portrait Header</field>
         </record>
+
+        <record id="webkit_picking" model="ir.actions.report.xml">
+            <field name="webkit_header" ref="base_ultra_minimum_reports_portrait_header"></field>
+            <field name="download_filename">Bon de préparation.pdf</field>
+        </record>
+
     </data>
 
 </openerp>

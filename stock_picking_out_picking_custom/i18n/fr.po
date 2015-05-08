@@ -1,0 +1,21 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_out_picking_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-05-05 22:08+0000\n"
+"PO-Revision-Date: 2015-05-05 22:08+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_out_picking_custom
+#: model:ir.actions.report.xml,name:stock_picking_out_picking_custom.webkit_picking
+msgid "Picking Report"
+msgstr "Bon de preparation"

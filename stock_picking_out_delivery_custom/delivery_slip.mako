@@ -52,7 +52,6 @@
     %>
     %for picking in objects:
         <% setLang(picking.partner_id.lang) %>
-        <% picking.set_printed() %>
         <div class="address">
             <table class="recipient">
                 %if picking.partner_id.parent_id:
@@ -113,7 +112,6 @@
         <table class="list_main_table" width="100%" style="margin-top: 20px;">
             <thead>
                 <tr>
-                    <th>${_("Building")}</th>
                     <th>${_("Brand")}</th>
                     <th>${_("Collection")}</th>
                     <th>${_("Model")}</th>
@@ -124,7 +122,6 @@
             <tbody>
             %for line in picking.move_lines:
                 <tr>
-                    <td>${ line.building }</td>
                     <td>${ line.product_brand_id.name }</td>
                     <td>${ line.product_collection_id.name }</td>
                     <td>${ line.product_code }</td>

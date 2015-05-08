@@ -6,6 +6,32 @@
     <style type="text/css">
         ${css}
 
+        h1 {
+            text-align:center;
+            font-size: 55px;
+        }
+
+        body {
+            font-family: helvetica;
+            font-size: 11px;
+        }
+
+        table {
+            font-family: helvetica;
+            font-size: 11px;
+        }
+
+        .basic_table{
+            text-align: center;
+            border: 1px solid lightGrey;
+            border-collapse: collapse;
+        }
+
+        .basic_table td {
+            border: 1px solid lightGrey;
+            font-size: 12px;
+        }
+
         .list_main_table {
             border:thin solid #E3E4EA;
             text-align:center;
@@ -41,6 +67,44 @@
             margin-right: 40px;
         }
 
+        .address table {
+            font-size: 11px;
+            border-collapse: collapse;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .address .shipping {
+
+        }
+
+        .address .invoice {
+            margin-top: 10px;
+        }
+
+        .address .recipient {
+            margin-right: 120px;
+            float: right;
+        }
+
+        table .address_title {
+            font-weight: bold;
+        }
+
+        .address td.name {
+            font-weight: bold;
+        }
+
+        tr.line .note {
+            border-style: none;
+            font-size: 9px;
+            padding-left: 10px;
+        }
+
+        tr.line {
+            margin-bottom: 10px;
+        }
+
     </style>
 </head>
 
@@ -53,10 +117,11 @@
     %for picking in objects:
         <% setLang(picking.partner_id.lang) %>
         <% picking.set_printed() %>
+        <h1>Bon de préparation</h1>
         <div class="address">
             <table class="recipient">
                 %if picking.partner_id.parent_id:
-                <tr><td class="address_title">${_("Delivery address:")}</td></tr>
+                <tr><td class="address_title">Adresse de Livraison : </td></tr>
                 <tr><td class="name">${picking.partner_id.parent_id.name or ''}</td></tr>
                 <tr><td>${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
                 <% address_lines = picking.partner_id.contact_address.split("\n")[1:] %>
@@ -87,7 +152,7 @@
             invoice_addr = invoice_address(picking)
             %>
             <table class="invoice">
-                <tr><td class="address_title">${_("Invoice address:")}</td></tr>
+                <tr><td class="address_title">Adresse de Facturation : </td></tr>
                 <tr><td>${invoice_addr.title and invoice_addr.title.name or ''} ${invoice_addr.name }</td></tr>
                 %if invoice_addr.contact_address:
                     <% address_lines = invoice_addr.contact_address.split("\n") %>
@@ -100,18 +165,18 @@
             </table>
         </div>
         %if picking.sale_id:
-            <h1 style="clear:both;">${_(u'Sale Order:') } ${picking.sale_id.name}</h1>
+            <h2 style="clear:both;">Commande : ${picking.sale_id.name}</h2>
         %endif
         %if picking.claim_id:
-            <h1 style="clear:both;">${_(u'RMA') } ${picking.sale_id.name}</h1>
+            <h2 style="clear:both;">RMA ${picking.sale_id.name}</h2>
         %endif
-        <h1 style="clear:both;">${_(u'Delivery Order:') } ${picking.name}</h1>
+        <h2 style="clear:both;">Livraison :  ${picking.name}</h2>
         
         <table class="basic_table" width="100%">
             <tr>
-                <th style="font-weight:bold;">${_("Scheduled Shipping Date")}</th>
-                <th style="font-weight:bold;">${_('Weight')}</th>
-                <th style="font-weight:bold;">${_('Delivery Method')}</th>
+                <th style="font-weight:bold;">Date prévu</th>
+                <th style="font-weight:bold;">Poids</th>
+                <th style="font-weight:bold;">Transporteur</th>
             </tr>
             <tr>
                 <td>${formatLang(picking.max_date, date=True)}</td>
@@ -123,13 +188,13 @@
         <table class="list_main_table" width="100%" style="margin-top: 20px;">
             <thead>
                 <tr>
-                    <th>${_("Building")}</th>
-                    <th>${_("Brand")}</th>
-                    <th>${_("Collection")}</th>
-                    <th>${_("Model")}</th>
-                    <th>${_("Description")}</th>
-                    <th class="amount">${_("Quantity")}</th>
-                    <th>${_("Availability")}</th>
+                    <th>Batiment</th>
+                    <th>Marque</th>
+                    <th>Collection</th>
+                    <th>Modèle</th>
+                    <th>Description</th>
+                    <th class="amount">Quantité</th>
+                    <th>Approvisionnement</th>
                 </tr>
             </thead>
             <tbody>

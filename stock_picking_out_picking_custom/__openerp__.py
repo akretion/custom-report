@@ -30,6 +30,7 @@
  """,
  'depends': [
      'stock_picking_webkit',
+     'report_custom_filename',
  ],
  'data': [
      'report.xml',
