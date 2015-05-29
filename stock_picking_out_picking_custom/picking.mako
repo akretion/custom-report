@@ -48,7 +48,7 @@
         }
         .list_main_table td {
             border-top : thin solid #EEEEEE;
-            text-align:left;
+            text-align:center;
             font-size:12;
             padding-right:3px;
             padding-left:3px;
@@ -115,7 +115,7 @@
         return text.replace('\n', '<br />')
     %>
     %for picking in objects:
-        <% setLang(picking.partner_id.lang) %>
+        <% setLang('fr_FR') %>
         <% picking.set_printed() %>
         <h1>Bon de préparation</h1>
         <div class="address">
@@ -174,7 +174,7 @@
         
         <table class="basic_table" width="100%">
             <tr>
-                <th style="font-weight:bold;">Date prévu</th>
+                <th style="font-weight:bold;">Date prévue</th>
                 <th style="font-weight:bold;">Poids</th>
                 <th style="font-weight:bold;">Transporteur</th>
             </tr>
@@ -192,9 +192,11 @@
                     <th>Marque</th>
                     <th>Collection</th>
                     <th>Modèle</th>
-                    <th>Description</th>
-                    <th class="amount">Quantité</th>
-                    <th>Approvisionnement</th>
+                    <th>Nom</th>
+                    <th>Taille</th>
+                    <th>Couleur</th>
+                    <th>Qté Stock</th>
+                    <th>Qté Réassort</th>
                 </tr>
             </thead>
             <tbody>
@@ -204,9 +206,11 @@
                     <td>${ line.product_brand_id.name }</td>
                     <td>${ line.product_collection_id.name }</td>
                     <td>${ line.product_code }</td>
-                    <td>${ line.name }</td>
-                    <td class="amount" >${ int(line.product_qty) } </td>
-                    <td>${ line.state == 'available' and 'Stock' or 'Reassort' }</td>
+                    <td>${ line.product_id.name }</td>
+                    <td>${ line.product_size }</td>
+                    <td>${ line.product_color }</td>
+                    <td class="amount">${ line.state == 'assigned' and int(line.product_qty) or ''}</td>
+                    <td class="amount">${ line.state != 'assigned' and int(line.product_qty) or ''}</td>
                 </tr>
             %endfor
         </table>

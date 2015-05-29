@@ -51,7 +51,7 @@
         return text.replace('\n', '<br />')
     %>
     %for picking in objects:
-        <% setLang(picking.partner_id.lang) %>
+        <% setLang(picking.final_partner_id and picking.final_partner_id.lang or picking.partner_id.lang) %>
         <div class="address">
             <table class="recipient">
                 %if picking.partner_id.parent_id:
