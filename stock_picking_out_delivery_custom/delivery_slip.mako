@@ -54,13 +54,15 @@
         <% setLang(picking.final_partner_id and picking.final_partner_id.lang or picking.partner_id.lang) %>
         <div class="address">
             <table class="recipient">
-                %if picking.partner_id.parent_id:
                 <tr><td class="address_title">${_("Delivery address:")}</td></tr>
-                <tr><td class="name">${picking.partner_id.parent_id.name or ''}</td></tr>
-                <tr><td>${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
+                %if picking.partner_id.parent_id:
+                <tr><td class="name">${picking.partner_id.name or ''}</td></tr>
+                <tr><td>${picking.partner_id.company or ''}</td></tr>
                 <% address_lines = picking.partner_id.contact_address.split("\n")[1:] %>
                 %else:
+                <tr><td>${picking.partner_id.company or ""}</td></tr>
                 <tr><td class="name">${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
+                <tr><td>${picking.partner_id.company or ''}</td></tr>
                 <% address_lines = picking.partner_id.contact_address.split("\n") %>
                 %endif
                 %for part in address_lines:
@@ -77,7 +79,6 @@
             %>
             <table class="invoice">
                 <tr><td class="address_title">${_("Invoice address:")}</td></tr>
-                <tr><td>${invoice_addr.title and invoice_addr.title.name or ''} ${invoice_addr.name }</td></tr>
                 %if invoice_addr.contact_address:
                     <% address_lines = invoice_addr.contact_address.split("\n") %>
                     %for part in address_lines:

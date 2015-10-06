@@ -120,13 +120,14 @@
         <h1>Bon de préparation</h1>
         <div class="address">
             <table class="recipient">
-                %if picking.partner_id.parent_id:
                 <tr><td class="address_title">Adresse de Livraison : </td></tr>
+                %if picking.partner_id.parent_id:
                 <tr><td class="name">${picking.partner_id.parent_id.name or ''}</td></tr>
-                <tr><td>${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
+                <tr><td>${picking.partner_id.company}</td></tr>
                 <% address_lines = picking.partner_id.contact_address.split("\n")[1:] %>
                 %else:
                 <tr><td class="name">${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
+                <tr><td>${picking.partner_id.company or ''}</td></tr>
                 <% address_lines = picking.partner_id.contact_address.split("\n") %>
                 %endif
                 %for part in address_lines:
