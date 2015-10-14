@@ -132,11 +132,6 @@
             %endfor
         </table>
         
-        <br/>
-        %if picking.note :
-            <p class="std_text">${picking.note | carriage_returns}</p>
-        %endif
-
         <p style="page-break-after: always"/>
         <br/>
     %endfor
