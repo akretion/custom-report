@@ -37,11 +37,16 @@ class Picking(report_sxw.rml_parse):
         return partner_obj.browse(
             self.cr, self.uid, invoice_address_id)
 
+    def _get_selection_value(self, model, field_name, field_val):
+        return dict(self.pool.get(model).fields_get(
+            self.cr, self.uid)[field_name]['selection'])[field_val]
+
     def __init__(self, cr, uid, name, context):
         super(Picking, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'invoice_address': self._get_invoice_address,
+            'get_selection_value': self._get_selection_value,
         })
 
 
