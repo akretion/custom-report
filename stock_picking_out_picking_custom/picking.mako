@@ -204,6 +204,7 @@
                     <th>Taille</th>
                     <th>Couleur</th>
                     <th>Type Réassort</th>
+                    <th>Stock Restant</th>
                     <th>Nom</th>
                     <th>Batiment</th>
                 </tr>
@@ -222,6 +223,7 @@
                     <td>${ line.product_size }</td>
                     <td>${ line.product_color }</td>
                     <td>${ restocking_type }</td>
+                    <td>${ int(line.product_id.immediately_usable_qty) }</td>
                     <td>${ line.product_id.name }</td>
                     <td>${ line.building }</td>
                 </tr>
@@ -238,7 +240,7 @@
                 </tr>
             </tfoot>
         </table>
-        <br/>
+
         %if picking.note :
             <p class="std_text">${picking.note | carriage_returns}</p>
         %endif
