@@ -185,11 +185,15 @@
                 <th style="font-weight:bold;">Date prévue</th>
                 <th style="font-weight:bold;">Poids</th>
                 <th style="font-weight:bold;">Transporteur</th>
+                <th style="font-weight:bold;">Nb commande</th>
+                <th style="font-weight:bold;">Total Facturé</th>
             </tr>
             <tr>
                 <td>${formatLang(picking.max_date, date=True)}</td>
                 <td>${picking.weight}</td>
                 <td>${picking.carrier_id and picking.carrier_id.name or ''}</td>
+                <td>${picking.sale_id and picking.sale_id.partner_order_number or ''}</td>
+                <td>${picking.sale_id and picking.sale_id.partner_order_amount or ''}</td>
             </tr>
         </table>
     
