@@ -225,7 +225,7 @@
                     <td>${ line.product_brand_id.name }</td>
                     <td>${ line.product_collection_id.name }</td>
                     <td>${ line.product_size }</td>
-                    <td>${ line.product_color }</td>
+                    <td>${ line.product_color } (${line.product_id.color_id.code or ""})</td>
                     <td>${ restocking_type }</td>
                     <td>${ int(line.product_id.immediately_usable_qty) }</td>
                     <td>${ line.product_id.name }</td>
