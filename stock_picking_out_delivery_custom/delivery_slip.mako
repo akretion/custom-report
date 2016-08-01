@@ -130,13 +130,25 @@
                 </thead>
                 <tbody>
                 %for line in picking.move_lines:
-                    <tr>
-                        <td>${ line.product_brand_id.name }</td>
-                        <td>${ line.product_collection_id.name }</td>
-                        <td>${ line.product_code }</td>
-                        <td>${ line.name }</td>
-                        <td class="amount" >${ int(line.product_qty) }</td>
-                    </tr>
+                    %if picking.partial:
+                        %if line.partial_qty > 0:
+                            <tr>
+                                <td>${ line.product_brand_id.name }</td>
+                                <td>${ line.product_collection_id.name }</td>
+                                <td>${ line.product_code }</td>
+                                <td>${ line.name }</td>
+                                <td class="amount" >${ int(line.partial_qty) }</td>
+                            </tr>
+                        %endif
+                    %else:
+                       <tr>
+                           <td>${ line.product_brand_id.name }</td>
+                           <td>${ line.product_collection_id.name }</td>
+                           <td>${ line.product_code }</td>
+                           <td>${ line.name }</td>
+                           <td class="amount" >${ int(line.product_qty) }</td>
+                       </tr>
+                    %endif
                 %endfor
             </table>
     </div>
