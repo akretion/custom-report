@@ -58,7 +58,11 @@
     %>
     %for picking in objects:
         <div>
-            <% lang = picking.final_partner_id and picking.final_partner_id.lang or picking.partner_id.lang %>
+            %if picking.origin[0] == '2':
+              <% lang = 'en_US' %>
+            %else:
+              <% lang = 'fr_FR' %>
+            %endif
             <% setLang(lang) %>
             <div class="address">
                 <table class="recipient">
