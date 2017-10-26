@@ -263,7 +263,7 @@ td.vat {
                 <th>${_("Unit Price")}</th>
                 <th>${_("Taxes")}</th>
                 <th>${_("Disc.(%)")}</th>
-                <th>${_("Net Sub Total")}</th>
+                <th>${_("Sub Total")}</th>
             </tr>
         </thead>
         <tbody>
@@ -333,9 +333,6 @@ td.vat {
     </table>
         <br/>
         <br/>
-    %if inv.comment:
-        <p class="std_text">${inv.comment | carriage_returns}</p>
-    %endif
     %if inv.note2 :
         <p class="std_text">${inv.note2 | n}</p>
     %endif
