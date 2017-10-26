@@ -118,6 +118,10 @@
     %for picking in objects:
         <% setLang('fr_FR') %>
         <% picking.set_printed() %>
+        <%
+            total_qty = get_total_qty(picking)
+        %>
+
         %if picking.sale_id:
             <h1>${picking.sale_id.name} ${' - '} ${picking.sale_id.date_order}</h1>
         %endif
@@ -235,7 +239,14 @@
             </tbody>
             <tfoot class="totals">
                 <tr>
-                    <td colspan="9" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;border-bottom: thin solid  #ffffff ;text-align:right;">
+                    <td colspan="2" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;border-bottom: thin solid  #ffffff ;text-align:right;">
+                        <b>${_("Total quantity:")}</b>
+                    </td>
+                    <td class="amount" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;border-bottom: thin solid  #ffffff ;">
+                        <b>${ total_qty }</b>
+                    </td>
+
+                    <td colspan="6" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;border-bottom: thin solid  #ffffff ;text-align:right;">
                         <b>${_("Total:")}</b>
                     </td>
                     <td class="amount" style="border-right: thin solid  #ffffff ;border-top: thin solid  #ffffff ;border-left: thin solid  #ffffff ;border-bottom: thin solid  #ffffff ;">

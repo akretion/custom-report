@@ -41,12 +41,19 @@ class Picking(report_sxw.rml_parse):
         return dict(self.pool.get(model).fields_get(
             self.cr, self.uid)[field_name]['selection'])[field_val]
 
+    def _get_total_qty(self, picking):
+        qty = 0
+        for line in picking.move_lines:
+            qty += line.product_qty
+        return int(qty)
+
     def __init__(self, cr, uid, name, context):
         super(Picking, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'invoice_address': self._get_invoice_address,
             'get_selection_value': self._get_selection_value,
+            'get_total_qty': self._get_total_qty,
         })
 
 
