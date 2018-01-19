@@ -269,8 +269,8 @@ td.vat {
         <tbody>
         %for line in inv.invoice_line :
             <tr>
-                <td class="align_top">${line.product_id.categ_brand_id.name or ''}</td>
-                <td class="align_top">${line.product_id.collection_id.name or ''}</td>
+                <td class="align_top">${line.product_id and line.product_id.categ_brand_id.name or ''}</td>
+                <td class="align_top">${line.product_id and line.product_id.collection_id.name or ''}</td>
                 <td class="align_top">${line.product_id.base_default_code or ''}</td>
                 <td class="align_top"><div class="nobreak">${line.name.replace('\n','<br/>') or '' | n}
                     %if line.formatted_note:
