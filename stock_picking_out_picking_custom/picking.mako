@@ -9,7 +9,7 @@
         h1 {
             text-align:center;
             font-size: 55px;
-            line-height:20px;
+            line-height:40px;
         }
 
         body {
@@ -200,7 +200,7 @@
                 <td>${picking.sale_id and picking.sale_id.partner_order_amount or ''}</td>
             </tr>
         </table>
-    
+
         <table class="list_main_table" width="100%" style="margin-top: 20px;">
             <thead>
                 <tr>
