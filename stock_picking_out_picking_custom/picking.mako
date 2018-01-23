@@ -115,8 +115,18 @@
     def carriage_returns(text):
         return text.replace('\n', '<br />')
     %>
+    <%
+        page_break = False
+    %>
     %for picking in objects:
         <% setLang('fr_FR') %>
+        %if page_break:
+            <p style="page-break-after:always"/>
+        %endif
+        <%
+            page_break = True
+        %>
+
         <% picking.set_printed() %>
         <%
             total_qty = get_total_qty(picking)
@@ -260,7 +270,6 @@
             <p class="std_text">${picking.note | carriage_returns}</p>
         %endif
 
-        <p style="page-break-after: always"/>
         <br/>
     %endfor
 </body>

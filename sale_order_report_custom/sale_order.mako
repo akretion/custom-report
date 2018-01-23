@@ -150,8 +150,16 @@ td.date {
             % endif
         %endfor
     </%def>
-
+    <%
+        page_break = False
+    %>
     %for order in objects:
+        %if page_break:
+            <p style="page-break-after:always"/>
+        %endif
+        <%
+            page_break = True
+        %>
     <% setLang(order.partner_id.lang) %>
     <%
       quotation = order.state in ['draft', 'sent']
@@ -288,7 +296,6 @@ td.date {
     %if order.note2:
         <p class="std_text">${order.note2 | n}</p>
     %endif
-    <p style="page-break-after:always"/>
     %endfor
 </body>
 </html>

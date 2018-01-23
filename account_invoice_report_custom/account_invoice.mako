@@ -195,8 +195,16 @@ td.vat {
             % endif
         %endfor
     </%def>
-
+    <%
+        page_break = False
+    %>
     %for inv in objects:
+        %if page_break:
+            <p style="page-break-after:always"/>
+        %endif
+        <%
+            page_break = True
+        %>
     <% setLang(inv.partner_id.lang) %>
     <div class="address">
       <table class="recipient">
@@ -343,7 +351,6 @@ td.vat {
         </p>
     %endif
 
-    <p style="page-break-after:always"></p>
 
     %endfor
 </body>
