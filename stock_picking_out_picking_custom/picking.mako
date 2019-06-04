@@ -160,7 +160,7 @@
                     %endif
                 %endfor
                 <tr><td>${picking.partner_id.phone or picking.partner_id.mobile or ''}</td></tr>
-                <tr><td>${picking.partner_id.email or ''}</td></tr>
+                <tr><td>${picking.partner_id.email or picking.partner_id.parent_id and picking.partner_id.parent_id.email or ''}</td></tr>
             </table>
 
             <table class="table_barcode">
